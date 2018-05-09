@@ -5,10 +5,13 @@ By Dylan Hamer
 """
 
 import praw  # Reddit API
+import pyfiglet  # Optional subreddit headers
 
 """OAuth credentials: Remove these before commiting to source control"""
-id = "ENTER CLIENT ID"
-secret = "ENTER CLIENT SECRET"
+#id = "bl_3aEPx20KMOw"
+#secret = "tmVzWv5OXSuY3Laj66vfHA0UN8w"
+id = "Lzf9MWt6VKQbGg"
+secret = "UaEoRGae6DWmoBz7uUhp4CSeTxY"
 agent = "SimpleReddit (by /u/dylanhamer13)"
 
 class simpleReddit:
@@ -17,19 +20,21 @@ class simpleReddit:
         self.reddit = praw.Reddit(user_agent=agent,
                              client_secret=secret,
                              client_id=id)
-        self.subreddit = "news"
+        self.subreddit = "dadjokes"
         self.sort = "hot"
 
     def browse(self, showScores = True):
         """View posts"""
         subreddit = self.reddit.subreddit(self.subreddit)
         posts = getattr(subreddit, self.sort)()  # Get posts in subreddit
+        pyfiglet.print_figlet("/r/{}".format(self.subreddit))
         for post in posts:
-            print(post.title)
-            print(getattr(post, "body", "-"))
-            if showScores:
-                print(dir(post))
             print("-"*40)
+            print(post.title)
+            print(getattr(post, "selftext", "-"))
+            if showScores:
+                print("Score: {}".format(post.score))
+            print("-"*40+"\n")
 
 simpleReddit = simpleReddit()
 simpleReddit.browse()
