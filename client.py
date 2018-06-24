@@ -41,7 +41,7 @@ class simpleReddit:
 					print("Score: {}".format(post.score))
 				print("-"*40+"\n")
 		except prawcore.exceptions.InvalidToken:
-			print("The API id and secret key pair is invalid, please input valid API keys.")
+			raise prawcore.exceptions.InvalidToken("The API id and secret key pair is invalid, please input valid API keys.")
 
 simpleReddit = simpleReddit()
 simpleReddit.browse()
